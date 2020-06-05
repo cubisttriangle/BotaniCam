@@ -13,3 +13,6 @@
 
 1. Run the app locally:
    > FLASK_APP=app.py python -m flask run
+
+1. When you're done, stop the flask process and deactivate the virtual environment with:
+   > deactivate

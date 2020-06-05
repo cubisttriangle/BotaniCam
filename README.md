@@ -2,6 +2,7 @@
 
 1. If you haven't already, create a virtual environment:
    > mkdir venv
+   
    > virtualenv venv
 
 1. Activate the virtual environment:

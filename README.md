@@ -1,18 +1,21 @@
 ## To run...
 
+1. Clone this project:
+   > git clone git@github.com:cubisttriangle/BotaniCam.git
+
 1. If you haven't already, create a virtual environment:
-   > mkdir venv
+   > mkdir BotaniCam/venv
    
-   > virtualenv venv
+   > virtualenv BotaniCam/venv
 
 1. Activate the virtual environment:
-   > . ./venv/bin/activate
+   > . ./BotaniCam/venv/bin/activate
 
 1. Install required packages:
-   > pip install -r requirements.txt
+   > pip install -r BotaniCam/requirements.txt
 
 1. Run the app locally:
-   > FLASK_APP=app.py python -m flask run
+   > FLASK_APP=BotaniCam python -m flask run
 
-1. When you're done, stop the flask process and deactivate the virtual environment with:
+1. When you're done, stop the flask process. Then deactivate the virtual environment with:
    > deactivate

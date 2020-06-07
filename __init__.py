@@ -11,8 +11,10 @@ def register_blueprints( app ):
 
     from blueprints.dashboard import dashboard
     from blueprints.users import users
+    from blueprints.plants import plants
     app.register_blueprint( dashboard )
     app.register_blueprint( users )
+    app.register_blueprint( plants )
 
 def load_config( app, app_config ):
 

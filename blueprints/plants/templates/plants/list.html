@@ -1,0 +1,37 @@
+{% extends "base.jinja" %}
+
+{% block content %}
+  {% if not plants %}
+    <p>No plants in database.</p>
+  {% else %}
+    <table class="table table-striped table-hover table-dark">
+      <tr>
+        <th colspan="5">
+          <h3>Plants</h3> <a href="{{url_for('plants.add')}}">new</a>
+        </th>
+      </tr>
+      <tr>
+        <th>ID</th>
+        <th>Common Name</th>
+        <th>Genus</th>
+        <th>Species</th>
+        <th>Delete Plant</th>
+      </tr>
+    {% for plant in plants %}
+      {% set plant_ref=url_for('plants.plant', id=plant.id) %}
+      {% set del_ref=url_for('plants.delete', id=plant.id) %}
+      <tr id="{{plant.id}}">
+        <td><a href="{{plant_ref}}">{{plant.id}}</a></td>
+        <td>{{plant.common_name}}</td>
+        <td>{{plant.genus}}</td>
+        <td>{{plant.species}}</td>
+        <td>
+          <form name="deletePlant" action="{{del_ref}}" method="post">
+          <button type="submit" class="btn btn-light" name="id" value="{{plant.id}}" class="link-button">Delete Plant</button>
+          </form>
+        </td>
+      </tr>
+    {% endfor %}
+    </table>
+  {% endif %}
+{% endblock %}

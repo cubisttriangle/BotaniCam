@@ -1,0 +1,13 @@
+{% extends "base.jinja" %}
+
+{% block content %}
+<div class="formwrapper">
+  <h2 class="title">Plant</h2>
+  <form method="POST" action="{{ url_for( 'plants.add' ) }}">
+      <div class="form-group">{{ form.common_name.label }} {{ form.common_name }}</div>
+      <div class="form-group">{{ form.genus.label }} {{ form.genus(size=20) }}</div>
+      <div class="form-group">{{ form.species.label }} {{ form.species(size=20) }}</div>
+      {{ form.submit }}
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends "base.jinja" %}
+
+{% block content %}
+  {% if not users %}
+    <p>No users in database.</p>
+  {% else %}
+    <table class="table table-striped table-hover table-dark">
+      <tr>
+        <th colspan="5">
+          <h3>Users</h3>
+        </th>
+      </tr>
+      <tr>
+        <th>ID</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Delete User</th>
+      </tr>
+    {% for user in users %}
+      {% set user_ref=url_for('users.user', id=user.id) %}
+      {% set del_ref=url_for('users.delete', id=user.id) %}
+      <tr id="{{user.id}}">
+        <td><a href="{{user_ref}}">{{user.id}}</a></td>
+        <td>{{user.first_name}}</td>
+        <td>{{user.last_name}}</td>
+        <td>{{user.email}}</td>
+        <!--td><a href="{{del_ref}}">DeleteIcon</a></td-->
+        <td>
+          <form name="deleteUser" action="{{del_ref}}" method="post">
+          <button type="submit" class="btn btn-light" name="id" value="{{user.id}}" class="link-button">Delete User</button>
+          </form>
+        </td>
+      </tr>
+    {% endfor %}
+    </table>
+  {% endif %}
+{% endblock %}

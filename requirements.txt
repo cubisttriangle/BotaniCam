@@ -1,2 +1,4 @@
 Flask
+Flask-WTF
 SQLAlchemy
+email_validator

@@ -10,7 +10,7 @@ def create_db_session_factory( db_config = None ):
 
     if db_config is None:
 
-        engine = create_engine( 'sqlite:///:memory:' )
+        engine = create_engine( 'sqlite:///test.db' )
         Base.metadata.create_all( engine )
         return sessionmaker( bind=engine )
 

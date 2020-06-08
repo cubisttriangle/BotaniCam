@@ -1,0 +1,52 @@
+
+{% macro list( name_plural, name_singular, objs, fields ) %}
+
+  {% if not objs %}
+    <p>No {{name_plural}} in database.</p>
+  {% else %}
+    <table class="table table-striped table-hover table-dark">
+
+      {% set np = name_plural %}
+      {% set ns = name_singular %}
+
+      {% set add_ref=url_for('{}.add'.format(np)) %}
+
+      <tr>
+        <th colspan="{{ fields|length + 2 }}">
+          <h3>{{np|capitalize}} <a href="{{add_ref}}">(new)</a></h3>
+        </th>
+      </tr>
+      <tr>
+        {% for field in fields %}
+          <th>{{field|replace('_',' ')|capitalize}}</th>
+        {% endfor %}
+        <th>Edit {{ns|capitalize}}</th>
+        <th>Delete {{ns|capitalize}}</th>
+      </tr>
+    {% for obj in objs %}
+
+      {% set obj_ref=url_for('{}.{}'.format(np, ns), id=obj.id) %}
+      {% set edit_ref="window.location='{}'".format( url_for('{}.edit'.format(np), id=obj.id) ) %}
+      {% set del_ref=url_for('{}.delete'.format(np), id=obj.id) %}
+
+      <tr id="{{obj.id}}">
+        {% for field in fields %}
+          {% if field == 'id' %}
+            <td><a href="{{obj_ref}}">{{obj.id}}</a></td>
+          {% else %}
+            <td>{{obj[field]}}</td>
+          {% endif %}
+        {% endfor %}
+        <td><button onclick="{{edit_ref}}" class="btn btn-light">Edit {{ns|capitalize}}</button></td>
+        <td>
+          <form action="{{del_ref}}" method="post">
+            <button type="submit" class="btn btn-light" class="link-button">Delete {{ns|capitalize}}</button>
+          </form>
+        </td>
+      </tr>
+    {% endfor %}
+    </table>
+  {% endif %}
+
+{% endmacro %}
+~               

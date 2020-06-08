@@ -1,0 +1,6 @@
+
+{% macro obj_repr( obj, fields ) %}
+  {% for field in fields %}
+    <p>{{field|replace('_',' ')|capitalize}}: {{obj[field]}}</p>
+  {% endfor %}
+{% endmacro %}

@@ -7,13 +7,19 @@ from ...models.Person import Person
 users = Blueprint( 'users', __name__,
                    template_folder='templates' )
 
+user_fields = [ 'id', 'first_name', 'last_name', 'email' ]
+
 @users.route( '/users' )
 @users.route( '/users/' )
 def list():
 
     users = current_app.session.query( Person ).all()
 
-    return render_template( 'users/list.html', users=users )
+    return render_template( 'simple_list.html',
+                            name_plural='users',
+                            name_singular='user',
+                            objs=users,
+                            fields=user_fields )
 
 @users.route( '/users/<int:id>' )
 @users.route( '/users/<int:id>/' )
@@ -24,7 +30,7 @@ def user( id ):
     if not user:
         return redirect( 404 )
 
-    return render_template( 'users/user.html', user=user )
+    return render_template( 'simple_obj.html', obj=user, fields=user_fields )
 
 
 @users.route( '/users/add', methods=( 'GET', 'POST' ) )

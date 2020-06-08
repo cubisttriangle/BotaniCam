@@ -7,13 +7,19 @@ from ...models.Plant import Plant
 plants = Blueprint( 'plants', __name__,
                    template_folder='templates' )
 
+plant_fields=[ 'id', 'common_name', 'genus', 'species' ]
+
 @plants.route( '/plants' )
 @plants.route( '/plants/' )
 def list():
 
     plants = current_app.session.query( Plant ).all()
 
-    return render_template( 'plants/list.html', plants=plants )
+    return render_template( 'simple_list.html',
+                            name_plural='plants',
+                            name_singular='plant',
+                            objs=plants,
+                            fields=plant_fields )
 
 @plants.route( '/plants/<int:id>' )
 @plants.route( '/plants/<int:id>/' )
@@ -24,7 +30,7 @@ def plant( id ):
     if not plant:
         return redirect( 404 )
 
-    return render_template( 'plants/plant.html', plant=plant )
+    return render_template( 'simple_obj.html', obj=plant, fields=plant_fields )
 
 
 @plants.route( '/plants/add', methods=( 'GET', 'POST' ) )
@@ -34,13 +40,13 @@ def add():
     if request.method == 'POST':
 
         # TODO: Handle case-insensitive, duplicates.
-        plant = Plant( genus=request.form['genus'],
-                        species=request.form['species'],
-                        common_name=request.form['common_name'] )
+        plant = Plant( common_name=request.form['common_name'],
+                       genus=request.form['genus'],
+                       species=request.form['species'] )
         current_app.session.add( plant )
         current_app.session.commit()
 
-        # TODO: Redirect to appropriate row id
+        # TODO: Redirect to appropriate row id ( '/plants#id' )
         return redirect( url_for( 'plants.list' ) )
 
     else:

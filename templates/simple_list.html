@@ -1,0 +1,6 @@
+{% extends 'base.jinja' %}
+{% from 'list.jinja' import list %}
+
+{% block content %}
+  {{ list( name_plural, name_singular, objs, fields ) }}
+{% endblock %}

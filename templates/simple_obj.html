@@ -1,0 +1,6 @@
+{% extends 'base.jinja' %}
+{% from 'obj.jinja' import obj_repr %}
+
+{% block content %}
+  {{ obj_repr( obj, fields ) }}
+{% endblock %}

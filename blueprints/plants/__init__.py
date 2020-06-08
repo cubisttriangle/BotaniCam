@@ -4,13 +4,13 @@ from plant_form import PlantForm
 
 from ...models.Plant import Plant
 
-plants = Blueprint( 'plants', __name__,
+plants = Blueprint( 'plants', __name__, url_prefix='/plants',
                    template_folder='templates' )
 
 plant_fields=[ 'id', 'common_name', 'genus', 'species' ]
 
-@plants.route( '/plants' )
-@plants.route( '/plants/' )
+@plants.route( '' )
+@plants.route( '/' )
 def list():
 
     plants = current_app.session.query( Plant ).all()
@@ -21,8 +21,8 @@ def list():
                             objs=plants,
                             fields=plant_fields )
 
-@plants.route( '/plants/<int:id>' )
-@plants.route( '/plants/<int:id>/' )
+@plants.route( '<int:id>' )
+@plants.route( '<int:id>/' )
 def plant( id ):
 
     plant = current_app.session.query( Plant ).filter( Plant.id == id ).first()
@@ -33,8 +33,8 @@ def plant( id ):
     return render_template( 'simple_obj.html', obj=plant, fields=plant_fields )
 
 
-@plants.route( '/plants/add', methods=( 'GET', 'POST' ) )
-@plants.route( '/plants/add/', methods=( 'GET', 'POST' ) )
+@plants.route( 'add', methods=( 'GET', 'POST' ) )
+@plants.route( 'add/', methods=( 'GET', 'POST' ) )
 def add():
 
     if request.method == 'POST':
@@ -59,8 +59,8 @@ def add():
 
     return render_template( 'plants/add.html', form=form, action="add" )
 
-@plants.route( '/plants/edit/<int:id>', methods=( 'GET', 'POST' ) )
-@plants.route( '/plants/edit/<int:id>/', methods=( 'GET', 'POST' ) )
+@plants.route( '/edit/<int:id>', methods=( 'GET', 'POST' ) )
+@plants.route( '/edit/<int:id>/', methods=( 'GET', 'POST' ) )
 def edit( id ):
 
     plant = current_app.session.query( Plant ).filter( Plant.id == id ).first()
@@ -90,8 +90,8 @@ def edit( id ):
 
         return render_template( 'plants/add.html', form=form, action="edit", id=plant.id )
 
-@plants.route( '/plants/delete/<int:id>', methods=( 'GET', 'POST' ) )
-@plants.route( '/plants/delete/<int:id>/', methods=( 'GET', 'POST' ) )
+@plants.route( '/delete/<int:id>', methods=( 'GET', 'POST' ) )
+@plants.route( '/delete/<int:id>/', methods=( 'GET', 'POST' ) )
 def delete( id ):
 
     plant = current_app.session.query( Plant ).filter( Plant.id == id ).first()

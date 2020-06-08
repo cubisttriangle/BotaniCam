@@ -4,13 +4,13 @@ from user_form import UserForm
 
 from ...models.Person import Person
 
-users = Blueprint( 'users', __name__,
+users = Blueprint( 'users', __name__, url_prefix='/users',
                    template_folder='templates' )
 
 user_fields = [ 'id', 'first_name', 'last_name', 'email' ]
 
-@users.route( '/users' )
-@users.route( '/users/' )
+@users.route( '' )
+@users.route( '/' )
 def list():
 
     users = current_app.session.query( Person ).all()
@@ -21,8 +21,8 @@ def list():
                             objs=users,
                             fields=user_fields )
 
-@users.route( '/users/<int:id>' )
-@users.route( '/users/<int:id>/' )
+@users.route( '/<int:id>' )
+@users.route( '/<int:id>/' )
 def user( id ):
 
     user = current_app.session.query( Person ).filter( Person.id == id ).first()
@@ -33,8 +33,8 @@ def user( id ):
     return render_template( 'simple_obj.html', obj=user, fields=user_fields )
 
 
-@users.route( '/users/add', methods=( 'GET', 'POST' ) )
-@users.route( '/users/add/', methods=( 'GET', 'POST' ) )
+@users.route( '/add', methods=( 'GET', 'POST' ) )
+@users.route( '/add/', methods=( 'GET', 'POST' ) )
 def add():
 
     if request.method == 'POST':
@@ -59,8 +59,8 @@ def add():
 
     return render_template( 'users/add.html', form=form, action="add" )
 
-@users.route( '/users/edit/<int:id>', methods=( 'GET', 'POST' ) )
-@users.route( '/users/edit/<int:id>/', methods=( 'GET', 'POST' ) )
+@users.route( '/edit/<int:id>', methods=( 'GET', 'POST' ) )
+@users.route( '/edit/<int:id>/', methods=( 'GET', 'POST' ) )
 def edit( id ):
 
     user = current_app.session.query( Person ).filter( Person.id == id ).first()
@@ -90,7 +90,7 @@ def edit( id ):
 
         return render_template( 'users/add.html', form=form, action="edit", id=user.id )
 
-@users.route( '/users/delete/<int:id>', methods=( 'GET', 'POST' ) )
+@users.route( '/delete/<int:id>', methods=( 'GET', 'POST' ) )
 def delete( id ):
 
     user = current_app.session.query( Person ).filter( Person.id == id ).first()

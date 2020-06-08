@@ -49,13 +49,40 @@ def add():
 
         if form.validate_on_submit():
     
-            print( "Got validated form." )
-    
-            print( dir( current_app.session ) )
-    
             return redirect( url_for( '/Users' ) )
 
-    return render_template( 'users/add.html', form=form )
+    return render_template( 'users/add.html', form=form, action="add" )
+
+@users.route( '/users/edit/<int:id>', methods=( 'GET', 'POST' ) )
+@users.route( '/users/edit/<int:id>/', methods=( 'GET', 'POST' ) )
+def edit( id ):
+
+    user = current_app.session.query( Person ).filter( Person.id == id ).first()
+
+    if not user:
+        # TODO: Take a more informative action.
+        return redirect( 404 )
+
+    if request.method == 'POST':
+
+        user.first_name = request.form['first_name']
+        user.last_name = request.form['last_name']
+        user.email = request.form['email']
+
+        current_app.session.commit()
+
+        # TODO: Redirect to appropriate row id
+        return redirect( url_for( 'users.list' ) )
+
+    else:
+
+        form = UserForm( obj = user )
+
+        if form.validate_on_submit():
+
+            return redirect( url_for( 'users.list' ) )
+
+        return render_template( 'users/add.html', form=form, action="edit", id=user.id )
 
 @users.route( '/users/delete/<int:id>', methods=( 'GET', 'POST' ) )
 def delete( id ):

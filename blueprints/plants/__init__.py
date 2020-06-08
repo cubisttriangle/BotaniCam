@@ -49,15 +49,43 @@ def add():
 
         if form.validate_on_submit():
     
-            print( "Got validated form." )
-    
-            print( dir( current_app.session ) )
-    
             return redirect( url_for( 'plants.list' ) )
 
-    return render_template( 'plants/add.html', form=form )
+    return render_template( 'plants/add.html', form=form, action="add" )
+
+@plants.route( '/plants/edit/<int:id>', methods=( 'GET', 'POST' ) )
+@plants.route( '/plants/edit/<int:id>/', methods=( 'GET', 'POST' ) )
+def edit( id ):
+
+    plant = current_app.session.query( Plant ).filter( Plant.id == id ).first()
+
+    if not plant:
+        # TODO: Take a more informative action.
+        return redirect( 404 )
+
+    if request.method == 'POST':
+
+        plant.genus = request.form['genus']
+        plant.species = request.form['species']
+        plant.common_name = request.form['common_name']
+
+        current_app.session.commit()
+
+        # TODO: Redirect to appropriate row id
+        return redirect( url_for( 'plants.list' ) )
+
+    else:
+
+        form = PlantForm( obj = plant )
+
+        if form.validate_on_submit():
+
+            return redirect( url_for( 'plants.list' ) )
+
+        return render_template( 'plants/add.html', form=form, action="edit", id=plant.id )
 
 @plants.route( '/plants/delete/<int:id>', methods=( 'GET', 'POST' ) )
+@plants.route( '/plants/delete/<int:id>/', methods=( 'GET', 'POST' ) )
 def delete( id ):
 
     plant = current_app.session.query( Plant ).filter( Plant.id == id ).first()

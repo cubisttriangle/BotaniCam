@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     {% block head %}
     <link rel="stylesheet"
@@ -7,13 +8,40 @@
       integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
       crossorigin="anonymous">
     <title>{% block title %}{% endblock %}</title>
+    <style> body { background-color: #51b87c; } </style>
     {% endblock %}
 </head>
+
 <body>
-    <div id="content">{% block content %}{% endblock %}</div>
-    <div id="footer">
-        {% block footer %}
-        {% endblock %}
-    </div>
+  <div id="nav">
+    {% block nav %}
+    {% set bcRef='https://github.com/cubisttriangle/BotaniCam' %}
+    {% set userRef=url_for('users.list') %}
+    {% set plantRef=url_for('plants.list') %}
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <a class="navbar-brand" href="{{bcRef}}">BotaniCam</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item active">
+            <a class="nav-link" href="{{userRef}}">Users<span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{plantRef}}">Plants</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+  {% endblock %}
+
+  <div id="content">{% block content %}{% endblock %}</div>
+
+  <div id="footer">
+      {% block footer %}
+      {% endblock %}
+  </div>
 </body>
 </html>

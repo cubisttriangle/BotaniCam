@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, current_app, request, redirect, url_for
 
-from plant_form import PlantForm
+from .plant_form import PlantForm
 
 from ...models.Plant import Plant
 

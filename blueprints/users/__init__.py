@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, current_app, request, redirect, url_for
 
-from user_form import UserForm
+from .user_form import UserForm
 
 from ...models.Person import Person
 

@@ -3,15 +3,15 @@ def set_db_session( app ):
 
     from flask import _app_ctx_stack
     from sqlalchemy.orm import scoped_session
-    import models
-    Session = models.create_db_session_factory()
+    from .models import create_db_session_factory
+    Session = create_db_session_factory()
     app.session = scoped_session( Session, scopefunc=_app_ctx_stack.__ident_func__ )
 
 def register_blueprints( app ):
 
-    from blueprints.dashboard import dashboard
-    from blueprints.users import users
-    from blueprints.plants import plants
+    from .blueprints.dashboard import dashboard
+    from .blueprints.users import users
+    from .blueprints.plants import plants
     app.register_blueprint( dashboard )
     app.register_blueprint( users )
     app.register_blueprint( plants )

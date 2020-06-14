@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, UniqueConstraint
 
-from BotaniBase import BotaniBase, Base
+from .BotaniBase import BotaniBase, Base
 
 class Plant( BotaniBase, Base ):
 

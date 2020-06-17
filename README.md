@@ -21,7 +21,7 @@
    > pip install -r ./requirements.txt
 
 1. Run the app locally:
-   > FLASK_APP=__init__.py python -m flask run
+   > FLASK_APP=webapp python -m flask run
 
 1. When you're done, stop the flask process. Then deactivate the virtual environment with:
    > deactivate

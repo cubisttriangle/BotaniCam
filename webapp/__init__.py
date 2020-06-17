@@ -4,7 +4,7 @@ def set_db_session( app ):
     from flask import _app_ctx_stack
     from sqlalchemy.orm import scoped_session
     from .models import create_db_session_factory
-    Session = create_db_session_factory()
+    Session = create_db_session_factory( app.config )
     app.session = scoped_session( Session, scopefunc=_app_ctx_stack.__ident_func__ )
 
 def register_blueprints( app ):

@@ -26,10 +26,12 @@
 1. When you're done, stop the flask process. Then deactivate the virtual environment with:
    > deactivate
 
+## Customization and configuration...
+
 To override the settings in config.py. Create a folder in the top-level project directory called instance and add your custom config.py there.
 
 1. Create instance directory. This shouldn't be added to version control.
    > mkdir instance
 
-1. Copy the config.py from the root dir to your instance folder and override whatever variables you like.
+1. Copy the config.py from the root directory to your instance folder and override whatever variables you like.
    > cp ./config.py ./instance/config.py

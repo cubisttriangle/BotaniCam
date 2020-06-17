@@ -59,8 +59,8 @@ def add():
 
     return render_template( 'users/add.html', form=form, action="add" )
 
-@users.route( '/edit/<int:id>', methods=( 'GET', 'POST' ) )
-@users.route( '/edit/<int:id>/', methods=( 'GET', 'POST' ) )
+@users.route( '/<int:id>/edit', methods=( 'GET', 'POST' ) )
+@users.route( '/<int:id>/edit/', methods=( 'GET', 'POST' ) )
 def edit( id ):
 
     user = current_app.session.query( Person ).filter( Person.id == id ).first()
@@ -90,7 +90,7 @@ def edit( id ):
 
         return render_template( 'users/add.html', form=form, action="edit", id=user.id )
 
-@users.route( '/delete/<int:id>', methods=( 'GET', 'POST' ) )
+@users.route( '/<int:id>/delete', methods=( 'GET', 'POST' ) )
 def delete( id ):
 
     user = current_app.session.query( Person ).filter( Person.id == id ).first()

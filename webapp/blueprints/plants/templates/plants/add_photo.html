@@ -1,0 +1,12 @@
+{% extends "base.jinja" %}
+
+{% block content %}
+<div class="formwrapper">
+  <h2 class="title">Plant</h2>
+
+  <form method="POST" action="{{ url_for('plants.add_photo', id=id) }}">
+      <div class="form-group">{{ form.photo_path.label }} {{ form.photo_path(size=20) }}</div>
+      {{ form.submit }}
+  </form>
+</div>
+{% endblock %}
